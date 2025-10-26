@@ -52,9 +52,7 @@ def test_get_missing_document(fake_documents: Documents) -> None:
         document.api_call.config.nearest_node,
         fake_documents.api_call.config.nearest_node,
     )
-    assert (
-        document._endpoint_path == "/collections/companies/documents/1"  # noqa: WPS437
-    )
+    assert document._endpoint_path == "/collections/companies/documents/1"
 
 
 def test_get_existing_document(fake_documents: Documents) -> None:

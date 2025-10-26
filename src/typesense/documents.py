@@ -167,7 +167,7 @@ class Documents(typing.Generic[TDoc]):
             List[Union[ImportResponseSuccess, ImportResponseFail[TDoc]]]:
                 The list of import responses.
         """
-        logger.warn("`create_many` is deprecated: please use `import_`.")
+        logger.warning("`create_many` is deprecated: please use `import_`.")
         return self.import_(documents, dirty_values_parameters)
 
     def upsert(

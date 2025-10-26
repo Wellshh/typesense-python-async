@@ -44,10 +44,7 @@ def test_get_missing_analytics_rule(fake_analytics_rules: AnalyticsRules) -> Non
         analytics_rule.api_call.config.nearest_node,
         fake_analytics_rules.api_call.config.nearest_node,
     )
-    assert (
-        analytics_rule._endpoint_path  # noqa: WPS437
-        == "/analytics/rules/company_analytics_rule"
-    )
+    assert analytics_rule._endpoint_path == "/analytics/rules/company_analytics_rule"
 
 
 def test_get_existing_analytics_rule(fake_analytics_rules: AnalyticsRules) -> None:

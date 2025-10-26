@@ -2,11 +2,20 @@
 
 import os
 
+import httpx
 import pytest
+import pytest_asyncio
 import requests
 from dotenv import load_dotenv
 
 from typesense.api_call import ApiCall
+from typesense.async_client.async_api_call import AsyncApiCall
+from typesense.async_client.conversation_model import (
+    ConversationModel as AsyncConversationModel,
+)
+from typesense.async_client.conversations_models import (
+    ConversationsModels as AsyncConversationsModels,
+)
 from typesense.conversation_model import ConversationModel
 from typesense.conversations_models import ConversationsModels
 
@@ -105,3 +114,107 @@ def create_conversation_history_collection_fixture() -> None:
 
     response = requests.post(url, headers=headers, json=collection_data, timeout=3)
     response.raise_for_status()
+
+
+@pytest_asyncio.fixture(
+    loop_scope="function", name="delete_all_conversations_models_async"
+)
+async def clear_typesense_conversations_models_async() -> None:
+    """Remove all conversations_models from the Typesense server asynchronously."""
+    url = "http://localhost:8108/conversations/models"
+    headers = {"X-TYPESENSE-API-KEY": "xyz"}
+
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url, headers=headers, timeout=3)
+        response.raise_for_status()
+        conversations_models = response.json()
+
+        for conversation_model in conversations_models:
+            conversation_model_id = conversation_model.get("id")
+            delete_url = f"{url}/{conversation_model_id}"
+            delete_response = await client.delete(
+                delete_url, headers=headers, timeout=3
+            )
+            delete_response.raise_for_status()
+
+
+@pytest_asyncio.fixture(
+    loop_scope="function", name="create_conversation_history_collection_async"
+)
+async def create_conversation_history_collection_fixture_async() -> None:
+    """Create a collection for conversation history in the Typesense server asynchronously."""
+    url = "http://localhost:8108/collections"
+    delete_url = "http://localhost:8108/collections/conversation_store"
+
+    headers = {"X-TYPESENSE-API-KEY": "xyz"}
+    collection_data = {
+        "name": "conversation_store",
+        "fields": [
+            {"name": "conversation_id", "type": "string"},
+            {"name": "model_id", "type": "string"},
+            {"name": "timestamp", "type": "int32"},
+            {"name": "role", "type": "string", "index": False},
+            {"name": "message", "type": "string", "index": False},
+        ],
+    }
+
+    async with httpx.AsyncClient() as client:
+        delete_response = await client.delete(delete_url, headers=headers, timeout=3)
+        if delete_response.status_code not in {200, 404}:
+            delete_response.raise_for_status()
+
+        response = await client.post(
+            url, headers=headers, json=collection_data, timeout=3
+        )
+        response.raise_for_status()
+
+
+@pytest_asyncio.fixture(loop_scope="function", name="create_conversations_model_async")
+async def create_conversations_model_fixture_async(
+    create_conversation_history_collection_async: None,
+) -> str:
+    """Create a conversations model in the Typesense server asynchronously."""
+    url = "http://localhost:8108/conversations/models"
+    headers = {"X-TYPESENSE-API-KEY": "xyz"}
+    conversations_model_data = {
+        "api_key": os.environ["OPEN_AI_KEY"],
+        "max_bytes": 16384,
+        "model_name": "openai/gpt-3.5-turbo",
+        "history_collection": "conversation_store",
+        "system_prompt": "This is a system prompt",
+    }
+
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            url,
+            headers=headers,
+            json=conversations_model_data,
+            timeout=3,
+        )
+        response.raise_for_status()
+        conversation_model_id: str = response.json()["id"]
+        return conversation_model_id
+
+
+@pytest_asyncio.fixture(loop_scope="function", name="fake_conversations_models_async")
+async def fake_conversations_models_fixture_async(
+    fake_api_call_async: AsyncApiCall,
+) -> AsyncConversationsModels:
+    """Return an AsyncConversationsModels object with test values."""
+    return AsyncConversationsModels(fake_api_call_async)
+
+
+@pytest_asyncio.fixture(loop_scope="function", name="fake_conversation_model_async")
+async def fake_conversation_model_fixture_async(
+    fake_api_call_async: AsyncApiCall,
+) -> AsyncConversationModel:
+    """Return an AsyncConversationModel object with test values."""
+    return AsyncConversationModel(fake_api_call_async, "conversation_model_id")
+
+
+@pytest_asyncio.fixture(loop_scope="function", name="actual_conversations_models_async")
+async def actual_conversations_models_fixture_async(
+    actual_api_call_async: AsyncApiCall,
+) -> AsyncConversationsModels:
+    """Return an AsyncConversationsModels object using a real API."""
+    return AsyncConversationsModels(actual_api_call_async)

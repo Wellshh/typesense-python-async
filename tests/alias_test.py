@@ -29,7 +29,7 @@ def test_init(fake_api_call: ApiCall) -> None:
         alias.api_call.config.nearest_node,
         fake_api_call.config.nearest_node,
     )
-    assert alias._endpoint_path == "/aliases/company_alias"  # noqa: WPS437
+    assert alias._endpoint_path == "/aliases/company_alias"
 
 
 def test_retrieve(fake_alias: Alias) -> None:

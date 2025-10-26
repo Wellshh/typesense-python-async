@@ -34,10 +34,7 @@ def test_init(fake_api_call: ApiCall) -> None:
         nl_search_model.api_call.config.nearest_node,
         fake_api_call.config.nearest_node,
     )
-    assert (
-        nl_search_model._endpoint_path  # noqa: WPS437
-        == "/nl_search_models/nl_search_model_id"
-    )
+    assert nl_search_model._endpoint_path == "/nl_search_models/nl_search_model_id"
 
 
 @pytest.mark.open_ai

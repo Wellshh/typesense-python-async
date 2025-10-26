@@ -24,9 +24,7 @@ def test_init(fake_api_call: ApiCall) -> None:
         operations.api_call.config.nearest_node,
         fake_api_call.config.nearest_node,
     )
-    assert (
-        operations._endpoint_path("resource") == "/operations/resource"  # noqa: WPS437
-    )
+    assert operations._endpoint_path("resource") == "/operations/resource"
 
 
 def test_vote(actual_operations: Operations) -> None:

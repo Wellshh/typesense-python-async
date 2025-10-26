@@ -25,7 +25,7 @@ def test_init(fake_api_call: ApiCall) -> None:
         stopword_set.api_call.config.nearest_node,
         fake_api_call.config.nearest_node,
     )
-    assert stopword_set._endpoint_path == "/stopwords/company_stopwords"  # noqa: WPS437
+    assert stopword_set._endpoint_path == "/stopwords/company_stopwords"
 
 
 def test_retrieve(fake_stopwords_set: StopwordsSet) -> None:

@@ -32,9 +32,7 @@ def test_init(fake_api_call: ApiCall) -> None:
         document.api_call.config.nearest_node,
         fake_api_call.config.nearest_node,
     )
-    assert (
-        document._endpoint_path == "/collections/companies/documents/0"  # noqa: WPS437
-    )
+    assert document._endpoint_path == "/collections/companies/documents/0"
 
 
 def test_retrieve(fake_document: Document) -> None:

@@ -6,7 +6,6 @@ import logging
 import sys
 import time
 
-from isort import Config
 from pytest_mock import MockFixture
 
 if sys.version_info >= (3, 11):
@@ -101,7 +100,7 @@ def test_get_error_message_with_invalid_json() -> None:
     response.status_code = 400
     # Set an invalid JSON string that would cause JSONDecodeError
     response._content = b'{"message": "Error occurred", "details": {"key": "value"'
-    
+
     error_message = RequestHandler._get_error_message(response)
     assert "API error: Invalid JSON response:" in error_message
     assert '{"message": "Error occurred", "details": {"key": "value"' in error_message
@@ -113,7 +112,7 @@ def test_get_error_message_with_valid_json() -> None:
     response.headers["Content-Type"] = "application/json"
     response.status_code = 400
     response._content = b'{"message": "Error occurred", "details": {"key": "value"}}'
-    
+
     error_message = RequestHandler._get_error_message(response)
     assert error_message == "Error occurred"
 
@@ -123,8 +122,8 @@ def test_get_error_message_with_non_json_content_type() -> None:
     response = requests.Response()
     response.headers["Content-Type"] = "text/plain"
     response.status_code = 400
-    response._content = b'Not a JSON content'
-    
+    response._content = b"Not a JSON content"
+
     error_message = RequestHandler._get_error_message(response)
     assert error_message == "API error."
 
@@ -529,7 +528,7 @@ def test_raises_if_no_nodes_are_healthy_with_the_last_exception(
             fake_api_call.get("/", entity_type=typing.Dict[str, str])
 
 
-def test_uses_nearest_node_if_present_and_healthy(  # noqa: WPS213
+def test_uses_nearest_node_if_present_and_healthy(
     mocker: MockerFixture,
     fake_api_call: ApiCall,
 ) -> None:

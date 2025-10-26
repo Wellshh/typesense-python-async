@@ -25,10 +25,7 @@ def test_init(fake_api_call: ApiCall) -> None:
         analytics_rule.api_call.config.nearest_node,
         fake_api_call.config.nearest_node,
     )
-    assert (
-        analytics_rule._endpoint_path  # noqa: WPS437
-        == "/analytics/rules/company_analytics_rule"
-    )
+    assert analytics_rule._endpoint_path == "/analytics/rules/company_analytics_rule"
 
 
 def test_retrieve(fake_analytics_rule: AnalyticsRule) -> None:

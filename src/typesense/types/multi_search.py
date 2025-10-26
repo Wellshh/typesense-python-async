@@ -18,7 +18,7 @@ class MultiSearchResponse(typing.TypedDict):
         results (list[SearchResponse]): The search results.
     """
 
-    results: typing.List[SearchResponse[typing.Any]]  # noqa: WPS110
+    results: typing.List[SearchResponse[typing.Any]]
 
 
 class MultiSearchRequestSchema(typing.TypedDict):

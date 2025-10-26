@@ -16,7 +16,7 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
 ]
-dependencies = ["requests"]
+dependencies = ["requests","httpx"]
 dynamic = ["version"]
 
 [project.urls]
@@ -40,6 +40,8 @@ dev = [
     "faker",
     "ruff>=0.11.11",
     "isort>=6.0.1",
+    "pytest-asyncio",
+    "pytest-httpx",
 ]
 
 [tool.uv]

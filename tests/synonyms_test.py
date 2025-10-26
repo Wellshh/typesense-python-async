@@ -45,10 +45,7 @@ def test_get_missing_synonym(fake_synonyms: Synonyms) -> None:
         fake_synonyms.api_call.config.nearest_node,
     )
     assert synonym.collection_name == "companies"
-    assert (
-        synonym._endpoint_path()  # noqa: WPS437
-        == "/collections/companies/synonyms/company_synonym"
-    )
+    assert synonym._endpoint_path() == "/collections/companies/synonyms/company_synonym"
 
 
 def test_get_existing_synonym(fake_synonyms: Synonyms) -> None:

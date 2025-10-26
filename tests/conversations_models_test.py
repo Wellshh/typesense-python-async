@@ -60,7 +60,7 @@ def test_get_missing_conversations_model(
         fake_conversations_models.api_call.config.nearest_node,
     )
     assert (
-        conversations_model._endpoint_path  # noqa: WPS437
+        conversations_model._endpoint_path
         == "/conversations/models/conversation_model_id"
     )
 

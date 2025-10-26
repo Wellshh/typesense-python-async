@@ -49,7 +49,7 @@ def test_get_missing_key(fake_keys: Keys) -> None:
         key.api_call.config.nearest_node,
         fake_keys.api_call.config.nearest_node,
     )
-    assert key._endpoint_path == "/keys/1"  # noqa: WPS437
+    assert key._endpoint_path == "/keys/1"
 
 
 def test_get_existing_key(fake_keys: Keys) -> None:

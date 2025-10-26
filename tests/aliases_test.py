@@ -44,7 +44,7 @@ def test_get_missing_alias(fake_aliases: Aliases) -> None:
         alias.api_call.config.nearest_node,
         fake_aliases.api_call.config.nearest_node,
     )
-    assert alias._endpoint_path == "/aliases/company_alias"  # noqa: WPS437
+    assert alias._endpoint_path == "/aliases/company_alias"
 
 
 def test_get_existing_alias(fake_aliases: Aliases) -> None:

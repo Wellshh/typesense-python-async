@@ -160,7 +160,7 @@ def test_validate_config_dict_with_wrong_node() -> None:
     """Test validate_config_dict with wrong node."""
     with pytest.raises(
         ConfigError,
-        match="`node` entry must be a URL string or a dictionary with the following required keys: host, port, protocol",  # noqa: B950
+        match="`node` entry must be a URL string or a dictionary with the following required keys: host, port, protocol",
     ):
         ConfigurationValidations.validate_config_dict(
             {
@@ -180,7 +180,7 @@ def test_validate_config_dict_with_wrong_nearest_node() -> None:
     """Test validate_config_dict with wrong nearest node."""
     with pytest.raises(
         ConfigError,
-        match="`nearest_node` entry must be a URL string or a dictionary with the following required keys: host, port, protocol",  # noqa: B950
+        match="`nearest_node` entry must be a URL string or a dictionary with the following required keys: host, port, protocol",
     ):
         ConfigurationValidations.validate_config_dict(
             {

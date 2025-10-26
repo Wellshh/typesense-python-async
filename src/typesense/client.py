@@ -90,8 +90,10 @@ class Client:
         Example:
             >>> config = {
             ...     "api_key": "your_api_key",
-            ...     "nodes": [{"host": "localhost", "port": "8108", "protocol": "http"}],
-            ...     "connection_timeout_seconds": 2
+            ...     "nodes": [
+            ...         {"host": "localhost", "port": "8108", "protocol": "http"}
+            ...     ],
+            ...     "connection_timeout_seconds": 2,
             ... }
             >>> client = Client(config)
         """
@@ -135,7 +137,6 @@ class Client:
             >>> class Company(DocumentSchema):
             ...     name: str
             ...     num_employees: int
-            ...
             >>> client = Client(config)
             >>> companies_collection = client.typed_collection(model=Company)
             # This is equivalent to:

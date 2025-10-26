@@ -44,7 +44,7 @@ def test_get_missing_stopword(fake_stopwords: Stopwords) -> None:
         stopword.api_call.config.nearest_node,
         fake_stopwords.api_call.config.nearest_node,
     )
-    assert stopword._endpoint_path == "/stopwords/company_stopwords"  # noqa: WPS437
+    assert stopword._endpoint_path == "/stopwords/company_stopwords"
 
 
 def test_get_existing_stopword(fake_stopwords: Stopwords) -> None:

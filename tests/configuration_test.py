@@ -123,7 +123,7 @@ def test_configuration_empty_nodes() -> None:
 
     with pytest.raises(
         ConfigError,
-        match="`nodes` is not defined.",  # noqa: B950
+        match="`nodes` is not defined.",
     ):
         Configuration(config)
 
@@ -137,7 +137,7 @@ def test_configuration_invalid_node() -> None:
 
     with pytest.raises(
         ConfigError,
-        match="`node` entry must be a URL string or a dictionary with the following required keys: host, port, protocol",  # noqa: B950
+        match="`node` entry must be a URL string or a dictionary with the following required keys: host, port, protocol",
     ):
         Configuration(config)
 
@@ -166,7 +166,7 @@ def test_configuration_invalid_nearest_node() -> None:
 
     with pytest.raises(
         ConfigError,
-        match="`nearest_node` entry must be a URL string or a dictionary with the following required keys: host, port, protocol",  # noqa: B950
+        match="`nearest_node` entry must be a URL string or a dictionary with the following required keys: host, port, protocol",
     ):
         Configuration(config)
 

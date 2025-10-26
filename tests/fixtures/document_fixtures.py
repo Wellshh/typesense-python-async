@@ -2,7 +2,9 @@
 
 import sys
 
+import httpx
 import pytest
+import pytest_asyncio
 import requests
 from faker import Faker
 from faker.providers import company
@@ -13,6 +15,9 @@ else:
     import typing_extensions as typing
 
 from typesense.api_call import ApiCall
+from typesense.async_client.async_api_call import AsyncApiCall
+from typesense.async_client.document import Document as AsyncDocument
+from typesense.async_client.documents import Documents as AsyncDocuments
 from typesense.document import Document
 from typesense.documents import Documents
 
@@ -75,3 +80,45 @@ def generate_companies_fixture() -> typing.List[Companies]:
         )
 
     return companies
+
+
+@pytest_asyncio.fixture(loop_scope="function", name="create_document_async")
+async def create_document_fixture_async() -> None:
+    """Create a document in the Typesense server asynchronously."""
+    url = "http://localhost:8108/collections/companies/documents"
+    headers = {"X-TYPESENSE-API-KEY": "xyz"}
+    document_data = {
+        "id": "0",
+        "company_name": "Company",
+        "num_employees": 10,
+    }
+
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            url, headers=headers, json=document_data, timeout=3
+        )
+        response.raise_for_status()
+
+
+@pytest_asyncio.fixture(loop_scope="function", name="actual_async_documents")
+async def actual_documents_fixture_async(
+    actual_api_call_async: AsyncApiCall,
+) -> AsyncDocuments:
+    """Return an AsyncDocuments object using a real API."""
+    return AsyncDocuments(actual_api_call_async, "companies")
+
+
+@pytest_asyncio.fixture(loop_scope="function", name="fake_async_documents")
+async def fake_documents_fixture_async(
+    fake_api_call_async: AsyncApiCall,
+) -> AsyncDocuments:
+    """Return an AsyncDocuments object with test values."""
+    return AsyncDocuments(fake_api_call_async, "companies")
+
+
+@pytest_asyncio.fixture(loop_scope="function", name="fake_async_document")
+async def fake_document_fixture_async(
+    fake_api_call_async: AsyncApiCall,
+) -> AsyncDocument:
+    """Return an AsyncDocument object with test values."""
+    return AsyncDocument(fake_api_call_async, "companies", "0")

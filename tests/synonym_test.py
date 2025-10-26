@@ -30,10 +30,7 @@ def test_init(fake_api_call: ApiCall) -> None:
         synonym.api_call.config.nearest_node,
         fake_api_call.config.nearest_node,
     )
-    assert (
-        synonym._endpoint_path()  # noqa: WPS437
-        == "/collections/companies/synonyms/company_synonym"
-    )
+    assert synonym._endpoint_path() == "/collections/companies/synonyms/company_synonym"
 
 
 def test_retrieve(fake_synonym: Synonym) -> None:

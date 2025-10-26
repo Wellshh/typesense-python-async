@@ -40,7 +40,7 @@ def test_init(fake_api_call: ApiCall) -> None:
         fake_api_call.config.nearest_node,
     )
     assert (
-        conversation_model._endpoint_path  # noqa: WPS437
+        conversation_model._endpoint_path
         == "/conversations/models/conversation_model_id"
     )
 

@@ -29,7 +29,7 @@ def test_init(fake_api_call: ApiCall) -> None:
         key.api_call.config.nearest_node,
         fake_api_call.config.nearest_node,
     )
-    assert key._endpoint_path == "/keys/3"  # noqa: WPS437
+    assert key._endpoint_path == "/keys/3"
 
 
 def test_retrieve(fake_key: Key) -> None:

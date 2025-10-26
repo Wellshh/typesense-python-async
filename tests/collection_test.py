@@ -32,7 +32,7 @@ def test_init(fake_api_call: ApiCall) -> None:
         fake_api_call.config.nearest_node,
     )
     assert collection.overrides.collection_name == "companies"
-    assert collection._endpoint_path == "/collections/companies"  # noqa: WPS437
+    assert collection._endpoint_path == "/collections/companies"
 
 
 def test_retrieve(fake_collection: Collection) -> None:

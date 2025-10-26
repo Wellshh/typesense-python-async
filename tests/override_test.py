@@ -31,8 +31,7 @@ def test_init(fake_api_call: ApiCall) -> None:
         fake_api_call.config.nearest_node,
     )
     assert (
-        override._endpoint_path()  # noqa: WPS437
-        == "/collections/companies/overrides/company_override"
+        override._endpoint_path() == "/collections/companies/overrides/company_override"
     )
 
 

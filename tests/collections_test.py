@@ -48,7 +48,7 @@ def test_get_missing_collection(fake_collections: Collections) -> None:
         fake_collections.api_call.config.nearest_node,
     )
     assert collection.overrides.collection_name == "companies"
-    assert collection._endpoint_path == "/collections/companies"  # noqa: WPS437
+    assert collection._endpoint_path == "/collections/companies"
 
 
 def test_get_existing_collection(fake_collections: Collections) -> None:
